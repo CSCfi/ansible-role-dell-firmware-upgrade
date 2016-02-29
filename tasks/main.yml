@@ -1,0 +1,11 @@
+---
+
+- name: Install Dell DSU repo 
+  shell: "wget -q -O - http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash"
+  creates: /etc/yum.repos.d/dell-system-update
+
+- name: Installing Dell DSU RPM
+  yum: name=dell-system-update state=latest
+
+- name: Update firmware
+shell: "dsu -n"
