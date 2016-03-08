@@ -1,4 +1,4 @@
-ansible-role-hp-firmware-upgrade
+ansible-role-dell-firmware-upgrade
 =========
 
 Ansible role to upgrade Dell system firmwares. This uses the Dell DSU utility and it sets it up if it's not already present.
