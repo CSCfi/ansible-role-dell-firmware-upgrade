@@ -18,7 +18,7 @@ Example Playbook
 ```
 - hosts: servers
   roles:
-     - { role: dell-firmware-upgrade }
+     - { role: ansible-role-dell-firmware-upgrade }
 ```
 License
 -------
