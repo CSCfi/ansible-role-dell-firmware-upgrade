@@ -1,6 +1,7 @@
 ---
 
 - name: Install Dell DSU repo 
+  environment: "{{proxy_env}}"
   shell: "wget -q -O - http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash"
   args:
      creates: /etc/yum.repos.d/dell-system-update
