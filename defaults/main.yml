@@ -1,0 +1,4 @@
+---
+
+dell_update_firmware: True
+dell_install_yum_repo: True

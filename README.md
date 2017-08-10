@@ -6,7 +6,7 @@ Ansible role to upgrade Dell system firmwares. This uses the Dell DSU utility an
 
 Role Variables
 --------------
-By default this role upgrades all firmwares.
+By default this role installs a yum repository and upgrades all firmwares.
 
 Define something like this to use a proxy when fetching the Dell bootstrap script
 <pre>
