@@ -11,3 +11,4 @@
 
 - name: Update firmware
   shell: "dsu -n"
+  when: dell_dsu_update_all_firmware
