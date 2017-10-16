@@ -2,6 +2,8 @@
 
  - hosts: localhost
    remote_user: root
+   vars:
+     - dell_dsu_repo_install: True
 
    vars:
      - dell_dsu_repo_install: True

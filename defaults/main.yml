@@ -1,0 +1,10 @@
+---
+
+#proxy_env - define this to use a proxy_env in the wget command where we install the Dell DSU repo
+
+# Don't install the DSU Repo by default
+dell_dsu_repo_install: False
+# Update all firmware by default
+dell_dsu_update_all_firmware: True
+
+...
