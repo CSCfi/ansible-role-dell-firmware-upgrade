@@ -1,0 +1,17 @@
+---
+
+ - hosts: localhost
+   remote_user: root
+
+   vars:
+     - dell_dsu_repo_install: True
+     - dell_dsu_update_all_firmware: False
+
+   roles:
+     - ../ansible-role-dell-firmware-upgrade
+
+   pre_tasks:
+     - name: install wget
+       package:
+         name: wget
+         state: present
