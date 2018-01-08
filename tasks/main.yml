@@ -7,6 +7,15 @@
      creates: /etc/yum.repos.d/dell-system-update
   when: dell_dsu_repo_install
 
+- name: Install Dell DSU prerequisites
+  yum:
+    name: "{{ item }}"
+    state: installed
+    with_items:
+      - usbutils
+      - compat-libstdc++-33.i686
+      - OpenIPMI
+
 - name: Installing Dell DSU RPM
   yum: name=dell-system-update state=present
 
