@@ -11,10 +11,10 @@
   yum:
     name: "{{ item }}"
     state: installed
-    with_items:
-      - usbutils
-      - compat-libstdc++-33.i686
-      - OpenIPMI
+  with_items:
+    - usbutils
+    - compat-libstdc++-33.i686
+    - OpenIPMI
 
 - name: Installing Dell DSU RPM
   yum: name=dell-system-update state=present
