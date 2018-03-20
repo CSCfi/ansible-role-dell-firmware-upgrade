@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/CSCfi/ansible-role-dell-firmware-upgrade.svg?branch=master)](https://travis-ci.org/CSCfi/ansible-role-dell-firmware-upgrade)
 ansible-role-dell-firmware-upgrade
 =========
 
