@@ -1,10 +1,11 @@
 ---
 
-- name: Install Dell DSU repo 
+- name: Install Dell DSU repo
   environment: "{{proxy_env|default(omit)}}"
   shell: "wget -q -O - http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash"
   args:
      creates: /etc/yum.repos.d/dell-system-update
+  tags: skip_ansible_lint
   when: dell_dsu_repo_install
 
 - name: Install Dell DSU prerequisites
@@ -20,5 +21,5 @@
   yum: name=dell-system-update state=present
 
 - name: Update firmware
-  shell: "dsu -n"
+  command: "dsu -n"
   when: dell_dsu_update_all_firmware
