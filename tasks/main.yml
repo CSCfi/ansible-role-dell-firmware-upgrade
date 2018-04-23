@@ -4,7 +4,7 @@
   environment: "{{proxy_env|default({})}}"
   shell: "wget -q -O - http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash"
   args:
-     creates: /etc/yum.repos.d/dell-system-update
+     creates: /etc/yum.repos.d/dell-system-update.repo
   tags: skip_ansible_lint
   register: reg_install_dsu_repo
   when: dell_dsu_repo_install
