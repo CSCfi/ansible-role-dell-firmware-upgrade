@@ -8,7 +8,7 @@
   tags: skip_ansible_lint
   register: reg_install_dsu_repo
   when: dell_dsu_repo_install
-  failed_when: "Done!" not in reg_install_dsu_repo.stdout
+  failed_when: "'Done!' not in reg_install_dsu_repo.stdout"
 
 - name: Install Dell DSU prerequisites
   yum:
