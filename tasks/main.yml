@@ -1,12 +1,14 @@
 ---
 
 - name: Install Dell DSU repo
-  environment: "{{proxy_env|default(omit)}}"
+  environment: "{{proxy_env|default({})}}"
   shell: "wget -q -O - http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash"
   args:
      creates: /etc/yum.repos.d/dell-system-update
   tags: skip_ansible_lint
+  register: reg_install_dsu_repo
   when: dell_dsu_repo_install
+  failed_when: "Done!" not in reg_install_dsu_repo.stdout
 
 - name: Install Dell DSU prerequisites
   yum:
@@ -18,7 +20,9 @@
     - OpenIPMI
 
 - name: Installing Dell DSU RPM
-  yum: name=dell-system-update state=present
+  yum:
+    name: dell-system-update
+    state: present
 
 - name: Update firmware
   command: "dsu -n"

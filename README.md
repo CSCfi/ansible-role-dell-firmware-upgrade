@@ -16,7 +16,7 @@ By default this role upgrades all firmwares.
 
 Define something like this to use a proxy when fetching the Dell bootstrap script
 <pre>
-proxy_server_address: "http://your_special_proxy :3128"
+proxy_server_address: "http://your_special_proxy:3128"
 proxy_env:
   ftp_proxy: "{{proxy_server_address}}"
   http_proxy: "{{proxy_server_address}}"
