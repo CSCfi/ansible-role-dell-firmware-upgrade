@@ -5,8 +5,6 @@
    vars:
      - dell_dsu_repo_install: True
      - dell_dsu_update_all_firmware: False
-     - proxy_env:
-        http_proxy: "http://localhost:3128"
 
    roles:
      - ../ansible-role-dell-firmware-upgrade
