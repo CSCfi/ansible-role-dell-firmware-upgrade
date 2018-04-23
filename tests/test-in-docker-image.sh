@@ -122,8 +122,8 @@ function test_playbook(){
 }
 function extra_tests(){
 
-    echo "TEST: cat the resulting /etc/collectd.d/collectd.conf"
-    cat /etc/collectd.d/collectd.conf
+    echo "TEST: ls -la /etc/yum.repos.d/"
+    ls -la /etc/yum.repos.d/*
 }
 
 
@@ -138,7 +138,7 @@ function main(){
     test_playbook_syntax
     test_playbook
     test_playbook_check
-#    extra_tests
+    extra_tests
 
 }
 
