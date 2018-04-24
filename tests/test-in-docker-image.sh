@@ -116,11 +116,14 @@ function test_playbook(){
 
     echo "TEST: idempotence test! Same as previous but now grep for changed=0.*failed=0"
     ansible-playbook -i ${ANSIBLE_INVENTORY} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} || grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' ) || (echo 'Idempotence test: fail' && exit 1)
+
+    echo "TEST: idempotence test #2! Same as previous but show the output"
+    ansible-playbook -i ${ANSIBLE_INVENTORY} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} ||(echo "third ansible run failed" && exit 3 )
 }
 function extra_tests(){
 
-    echo "TEST: cat the resulting /etc/collectd.d/collectd.conf"
-    cat /etc/collectd.d/collectd.conf
+    echo "TEST: ls -la /etc/yum.repos.d/"
+    ls -la /etc/yum.repos.d/*
 }
 
 
@@ -135,7 +138,7 @@ function main(){
     test_playbook_syntax
     test_playbook
     test_playbook_check
-#    extra_tests
+    extra_tests
 
 }
 
