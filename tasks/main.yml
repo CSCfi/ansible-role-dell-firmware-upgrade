@@ -32,3 +32,5 @@
 - name: Update firmware
   command: "dsu -n"
   when: dell_dsu_update_all_firmware
+  register: command_result
+  failed_when: command_result.rc != 0 and command_result.rc != 8
