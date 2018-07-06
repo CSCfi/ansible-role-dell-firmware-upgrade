@@ -5,6 +5,7 @@
    vars:
      - dell_dsu_repo_install: True
      - dell_dsu_update_all_firmware: False
+     - dell_dsu_arguments: "--non-interactive --apply-upgrades-only --preview"
 
    roles:
      - ../ansible-role-dell-firmware-upgrade
