@@ -17,12 +17,8 @@
 
 - name: Install Dell DSU prerequisites
   yum:
-    name: "{{ item }}"
-    state: installed
-  with_items:
-    - usbutils
-    - compat-libstdc++-33.i686
-    - OpenIPMI
+    name: "{{ dell_dsu_prerequisites }}"
+    state: present
 
 - name: Installing Dell DSU RPM
   yum:
@@ -33,4 +29,4 @@
   command: "dsu {{ dell_dsu_arguments }}"
   when: dell_dsu_update_all_firmware
   register: command_result
-  failed_when: command_result.rc != 0 and command_result.rc != 8
+  failed_when: command_result.rc not in dell_dsu_exit_codes
