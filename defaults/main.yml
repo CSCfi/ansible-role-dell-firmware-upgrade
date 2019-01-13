@@ -6,6 +6,8 @@
 dell_dsu_repo_install: False
 # Update all firmware by default
 dell_dsu_update_all_firmware: True
+# Run check for Dell hardware
+dell_dsu_assert: True
 
 # Arguments to DSU
 # Could be changed to for eaxmple only upgrade some categories with "--category=BI" 

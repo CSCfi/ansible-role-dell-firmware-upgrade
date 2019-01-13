@@ -1,5 +1,11 @@
 ---
 
+- name: Make sure this is only run on a dell server
+  assert:
+    that: ansible_system_vendor is match('Dell.*')
+    msg: "This role is only meant to be run on Dell systems"
+  when: dell_dsu_assert
+
 - name: Install Dell DSU repo
   environment: "{{proxy_env|default({})}}"
   shell: "wget -q -O - http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash"
