@@ -20,4 +20,5 @@ dell_dsu_prerequisites:
 dell_dsu_exit_codes:
   - 0
   - 8
+  - 34
 ...
