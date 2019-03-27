@@ -17,8 +17,9 @@ dell_dsu_prerequisites:
   - usbutils
   - compat-libstdc++-33.i686
   - OpenIPMI
-dell_dsu_exit_codes:
+dell_dsu_changed_exit_codes:
   - 0
   - 8
+dell_dsu_not_changed_exit_codes:
   - 34
 ...
