@@ -35,4 +35,5 @@
   command: "dsu {{ dell_dsu_arguments }}"
   when: dell_dsu_update_all_firmware
   register: command_result
-  failed_when: command_result.rc not in dell_dsu_exit_codes
+  failed_when: command_result.rc not in dell_dsu_not_changed_exit_codes + dell_dsu_not_changed_exit_codes
+  changed_when: command_result.rc in dell_dsu_changed_exit_codes
