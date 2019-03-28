@@ -17,9 +17,10 @@ dell_dsu_prerequisites:
   - usbutils
   - compat-libstdc++-33.i686
   - OpenIPMI
+# Exit codes documented on https://linux.dell.com/repo/hardware/dsu/
 dell_dsu_changed_exit_codes:
-  - 0
-  - 8
+  - 0 # Any successful operation performed by DSU
+  - 8 # Reboot is required for the update to be completed successfully
 dell_dsu_not_changed_exit_codes:
-  - 34
+  - 34 # There were no updates found for the system.
 ...
