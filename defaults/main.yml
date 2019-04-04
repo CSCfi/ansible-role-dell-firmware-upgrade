@@ -8,6 +8,8 @@ dell_dsu_repo_install: False
 dell_dsu_update_all_firmware: True
 # Run check for Dell hardware
 dell_dsu_assert: True
+# Manage multipath.conf (will do so only if file exists and multipathd is active)
+dell_dsu_manage_multipath_config: True
 
 # Arguments to DSU
 # Could be changed to for eaxmple only upgrade some categories with "--category=BI" 
