@@ -12,6 +12,16 @@
      - ../ansible-role-dell-firmware-upgrade
 
    pre_tasks:
+     - name: install multipathd to test managing multipath
+       package:
+         name: device-mapper-multipath
+         state: present
+     - name: add a sample multipath.conf
+       shell: "cp -v /usr/share/doc/device-mapper-multipath-*/multipath.conf /etc/multipath.conf"
+     - name: start multipath
+       service:
+         name: multipathd
+         state: started
      - name: install wget
        package:
          name: wget

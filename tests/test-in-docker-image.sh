@@ -124,6 +124,8 @@ function extra_tests(){
 
     echo "TEST: ls -la /etc/yum.repos.d/"
     ls -la /etc/yum.repos.d/*
+    echo "TEST: cat multipath.conf"
+    cat /etc/multipath.conf
 }
 
 
