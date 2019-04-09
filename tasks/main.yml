@@ -6,6 +6,10 @@
     msg: "This role is only meant to be run on Dell systems"
   when: dell_dsu_assert
 
+- name: include multipathd.yml if dell_dsu_manage_multipath_config is True
+  include_tasks: multipathd.yml
+  when: dell_dsu_manage_multipath_config
+
 - name: Install Dell DSU repo
   environment: "{{proxy_env|default({})}}"
   shell: "wget -q -O - http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash"
