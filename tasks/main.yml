@@ -35,6 +35,23 @@
     name: dell-system-update
     state: present
 
+- name: create /usr/libexec/dell_dup
+  file:
+    path: /usr/libexec/dell_dup
+    state: directory
+    mode: '0755'
+  when: dell_dsu_rollout_gpg_keys
+
+- name: copy gpg keys
+  copy:
+    dest: /usr/libexec/dell_dup/{{ item }}
+    src: "{{ item }}"
+  loop:
+    - 0x756ba70b1019ced6.asc
+    - 0x1285491434D8786F.asc
+    - 0xca77951d23b66a9d.asc
+  when: dell_dsu_rollout_gpg_keys
+
 - name: Update firmware
   command: "dsu {{ dell_dsu_arguments }}"
   when: dell_dsu_update_all_firmware
