@@ -30,11 +30,6 @@
     name: "{{ dell_dsu_prerequisites }}"
     state: present
 
-- name: Installing Dell DSU RPM
-  yum:
-    name: dell-system-update
-    state: present
-
 - name: create /usr/libexec/dell_dup
   file:
     path: /usr/libexec/dell_dup
@@ -46,11 +41,19 @@
   copy:
     dest: /usr/libexec/dell_dup/{{ item }}
     src: "{{ item }}"
-  loop:
-    - 0x756ba70b1019ced6.asc
-    - 0x1285491434D8786F.asc
-    - 0xca77951d23b66a9d.asc
+  loop: "{{ dell_dsu_gpg_keys }}"
   when: dell_dsu_rollout_gpg_keys
+
+- name: rpm import gpg keys
+  rpm_key:
+    key: /usr/libexec/dell_dup/{{ item }}
+  loop: "{{ dell_dsu_gpg_keys }}"
+  when: dell_dsu_rollout_gpg_keys
+
+- name: Installing Dell DSU RPM
+  yum:
+    name: dell-system-update
+    state: present
 
 - name: Update firmware
   command: "dsu {{ dell_dsu_arguments }}"
