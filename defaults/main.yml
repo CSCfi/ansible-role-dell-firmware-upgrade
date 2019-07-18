@@ -20,7 +20,7 @@ dell_dsu_gpg_keys:
 # Arguments to DSU
 # Could be changed to for eaxmple only upgrade some categories with "--category=BI" 
 #  for BIOS updates only
-dell_dsu_arguments: "--non-interactive --apply-upgrades --import-public-key"
+dell_dsu_arguments: "--non-interactive --apply-upgrades"
 dell_dsu_prerequisites:
   - usbutils
   - compat-libstdc++-33.i686

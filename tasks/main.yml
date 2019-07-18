@@ -50,6 +50,11 @@
   loop: "{{ dell_dsu_gpg_keys }}"
   when: dell_dsu_rollout_gpg_keys
 
+- name: gpg import gpg keys
+  command: "gpg --import /usr/libexec/dell_dup/{{ item }}"
+  loop: "{{ dell_dsu_gpg_keys }}"
+  when: dell_dsu_rollout_gpg_keys
+
 - name: Installing Dell DSU RPM
   yum:
     name: dell-system-update
