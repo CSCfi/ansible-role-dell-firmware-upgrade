@@ -52,7 +52,10 @@
 
 - name: gpg import gpg keys
   command: "gpg --import /usr/libexec/dell_dup/{{ item }}"
+  register: reg_dell_dsu_gpg_import
   loop: "{{ dell_dsu_gpg_keys }}"
+  changed_when: reg_dell_dsu_gpg_import.stderr is search('imported')
+  failed_when: reg_dell_dsu_gpg_import.rc|int != 0
   when: dell_dsu_rollout_gpg_keys
 
 - name: Installing Dell DSU RPM
