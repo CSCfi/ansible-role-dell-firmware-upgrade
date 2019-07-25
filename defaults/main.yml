@@ -12,11 +12,15 @@ dell_dsu_assert: True
 dell_dsu_manage_multipath_config: True
 # rollout dell gpg keys
 dell_dsu_rollout_gpg_keys: True
+dell_dsu_gpg_keys:
+  - 0x756ba70b1019ced6.asc # gpg-pubkey-1019ced6-4e9cac25
+  - 0x1285491434D8786F.asc # gpg-pubkey-34d8786f-4f512d86
+  - 0xca77951d23b66a9d.asc # gpg-pubkey-23b66a9d-40912de4
 
 # Arguments to DSU
 # Could be changed to for eaxmple only upgrade some categories with "--category=BI" 
 #  for BIOS updates only
-dell_dsu_arguments: "--non-interactive --apply-upgrades --import-public-key"
+dell_dsu_arguments: "--non-interactive --apply-upgrades"
 dell_dsu_prerequisites:
   - usbutils
   - compat-libstdc++-33.i686
