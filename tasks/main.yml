@@ -48,7 +48,7 @@
   rpm_key:
     key: /usr/libexec/dell_dup/{{ item }}
   loop: "{{ dell_dsu_gpg_keys }}"
-  when: dell_dsu_rollout_gpg_keys
+  when: dell_dsu_rollout_gpg_keys and not ansible_check_mode
 
 - name: gpg import gpg keys
   command: "gpg --import /usr/libexec/dell_dup/{{ item }}"
