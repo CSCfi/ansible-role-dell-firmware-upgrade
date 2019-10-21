@@ -61,7 +61,7 @@
 - name: Installing Dell DSU RPM
   yum:
     name: dell-system-update
-    state: present
+    state: latest
 
 - name: Update firmware
   command: "dsu {{ dell_dsu_arguments }}"
