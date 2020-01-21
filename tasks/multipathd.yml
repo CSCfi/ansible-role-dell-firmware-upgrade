@@ -10,38 +10,31 @@
     name: multipathd
   register: service_multipathd
 
-- name: Add blacklist to multipath.conf
+- name: Remove blacklist to multipath.conf
   blockinfile:
-    block: |
-      blacklist {
-              devnode "^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*"
-              devnode "^hd[a-z]*"
-              devnode "^cciss!c[0-9]d[0-9]*[p[0-9]*]"
-              devnode "^asm/*"
-              devnode "ofsctl"
-
-              device {
-                      vendor "DELL"
-                      product "IDSDM"
-              }
-              device {
-                      vendor "iDRAC"
-                      product "MAS022"
-              }
-              device {
-                      vendor "iDRAC"
-                      product "SECUPD"
-              }
-              device {
-                      vendor "iDRAC"
-                      product "scrtch"
-              }
-      }
+    block: ""
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK Dell DSU Blacklist"
     path: /etc/multipath.conf
-    state: present
-  register: blockinfile_multipath_config
+    state: absent
+  when: stat_multipath_conf.stat.exists is defined and stat_multipath_conf.stat.exists
+
+- name: Create conf.d multipath dir
+  file:
+    dest: /etc/multipath/conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Add blacklist config for dell devices into /etc/multipath/conf.d/
+  copy:
+    dest: /etc/multipath/conf.d/dell.conf
+    src: multipath_dell.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: dell_multipath_config
   when:
     - stat_multipath_conf.stat.exists is defined and stat_multipath_conf.stat.exists
     - service_multipathd.status.ActiveState == "active"
@@ -51,4 +44,4 @@
     name: multipathd
     state: reloaded
   when:
-    - blockinfile_multipath_config.changed
+    - dell_multipath_config.changed
