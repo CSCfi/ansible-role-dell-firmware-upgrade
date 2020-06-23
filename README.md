@@ -26,7 +26,6 @@ proxy_env:
 Dependencies
 ------------
 
- - wget
 
 Example Playbook
 ----------------
