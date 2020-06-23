@@ -12,7 +12,7 @@
 
 - name: Install Dell DSU repo
   environment: "{{ proxy_env|default({}) }}"
-  shell: "wget -q -O - http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash"
+  shell: "curl -O https://linux.dell.com/repo/hardware/dsu/bootstrap.cgi && bash bootstrap.cgi"
   args:
      creates: /etc/yum.repos.d/dell-system-update.repo
   tags: skip_ansible_lint
