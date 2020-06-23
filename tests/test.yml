@@ -11,8 +11,3 @@
    roles:
      - ../ansible-role-dell-firmware-upgrade
 
-   pre_tasks:
-     - name: install wget
-       package:
-         name: wget
-         state: present
