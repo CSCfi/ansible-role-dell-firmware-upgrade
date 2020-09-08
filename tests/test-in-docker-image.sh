@@ -55,7 +55,7 @@ function install_ansible_devel() {
 
 echo "TEST: building ansible"
 
-yum -y install PyYAML python-paramiko python-jinja2 python-httplib2 rpm-build make python2-devel asciidoc patch wget 2>&1 >/dev/null || (echo "Could not install ansible yum dependencies" && exit 2 )
+yum -y install PyYAML python-paramiko python-jinja2 python-httplib2 rpm-build make python2-devel asciidoc patch 2>&1 >/dev/null || (echo "Could not install ansible yum dependencies" && exit 2 )
 rm -Rf ansible
 git clone https://github.com/ansible/ansible --recursive ||(echo "Could not clone ansible from Github" && exit 2 )
 cd ansible
