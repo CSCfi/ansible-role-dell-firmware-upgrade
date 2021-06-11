@@ -72,4 +72,4 @@
 
 - name: Updating iDRAC only 
   include_tasks: idrac_update.yml
-  when: upgrade_idrac_only == True
+  when: upgrade_idrac_only | bool
