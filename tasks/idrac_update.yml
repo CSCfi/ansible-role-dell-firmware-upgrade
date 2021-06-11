@@ -22,6 +22,6 @@
 
     - name: Check if iDrac is upgraded 
       debug: 
-        msg: "iDrack is upgraded"
+        msg: "iDrac is upgraded"
       when: ((is_dsu_installed == True) and  (is_dsu_upgraded == True))
 
