@@ -69,3 +69,7 @@
   register: command_result
   failed_when: command_result.rc not in dell_dsu_changed_exit_codes + dell_dsu_not_changed_exit_codes
   changed_when: command_result.rc in dell_dsu_changed_exit_codes
+
+- name: Updating iDRAC only 
+  include_tasks: idrac_update.yml
+  when: upgrade_idrac_only
