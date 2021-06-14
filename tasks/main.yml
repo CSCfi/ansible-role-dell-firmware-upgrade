@@ -63,13 +63,54 @@
     name: dell-system-update
     state: latest
 
+- name: Init dell_dsu_update_all_firmware
+  set_fact:
+    dell_dsu_update_all_firmware: False
+    dell_dsu_update: False
+
+- name: Set categories_list
+  set_fact:
+    categories_list: "{{ upgrade_categories.split(',') }}"
+  when: (upgrade_categories is defined)
+
+- name: Set dell_dsu_update_all_firmware to True
+  set_fact:
+    dell_dsu_update_all_firmware: True
+    dell_dsu_update: True
+  when: (categories_list is defined) and ("all" in categories_list) and (categories_list | length == 1)
+
+- name: Check if the arguments are well defined
+  assert:
+    that: firmeware_components[item] is defined
+  loop: "{{ categories_list }}"
+  when: (categories_list is defined) and (dell_dsu_update_all_firmware == False)
+
+- name: Set dsu_categories list
+  set_fact:
+    dsu_categories_list: "{{ (dsu_categories_list | default([])) + [firmeware_components[item]] }}"
+  loop: "{{ categories_list }}"
+  when: (categories_list is defined) and (dell_dsu_update_all_firmware == False) 
+
+- name: Set dsu_categories
+  set_fact:
+    dsu_categories: "{{ dsu_categories_list | join(',') }}"
+  loop: "{{ categories_list }}"
+  when: (dsu_categories_list is defined)
+
+- name: Set dell_dsu_arguments when dsu_categories are not defined
+  set_fact:
+    dell_dsu_arguments: " {{ dell_dsu_arguments_base }}"
+  when: (dell_dsu_update_all_firmware is defined) and (dell_dsu_update_all_firmware == True) 
+
+- name: Set dell_dsu_arguments when dsu_categories are defined
+  set_fact:
+    dell_dsu_arguments: " {{ dell_dsu_arguments_base}} --category={{ dsu_categories }}"
+    dell_dsu_update: True
+  when: (dsu_categories is defined) 
+
 - name: Update firmware
   command: "dsu {{ dell_dsu_arguments }}"
-  when: dell_dsu_update_all_firmware
+  when: dell_dsu_update
   register: command_result
   failed_when: command_result.rc not in dell_dsu_changed_exit_codes + dell_dsu_not_changed_exit_codes
   changed_when: command_result.rc in dell_dsu_changed_exit_codes
-
-- name: Updating iDRAC only 
-  include_tasks: idrac_update.yml
-  when: upgrade_idrac_only | bool
