@@ -33,7 +33,7 @@ dell_dsu_changed_exit_codes:
 dell_dsu_not_changed_exit_codes:
   - 34 # There were no updates found for the system.
 
-firmeware_components:
+firmware_components:
   SAS_Drive: AS
   BIOS: BI
   Chassis_System_Management: CE
