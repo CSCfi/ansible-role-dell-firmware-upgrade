@@ -68,6 +68,13 @@
     dell_dsu_update_all_firmware: False
     dell_dsu_update: False
 
+- name: Set upgrade_categories when dell_dsu_update_all_firmware is True
+  set_fact:
+    upgrade_categories: all
+  when:
+    - upgrade_categories is not defined
+    - (dell_dsu_update_all_firmware is defined) and (dell_dsu_update_all_firmware)
+
 - name: Set categories_list
   set_fact:
     categories_list: "{{ upgrade_categories.split(',') }}"
@@ -83,13 +90,13 @@
   assert:
     that: firmware_components[item] is defined
   loop: "{{ categories_list }}"
-  when: (categories_list is defined) and (dell_dsu_update_all_firmware == False)
+  when: (categories_list is defined) and (not dell_dsu_update_all_firmware)
 
 - name: Set dsu_categories list
   set_fact:
     dsu_categories_list: "{{ (dsu_categories_list | default([])) + [firmware_components[item]] }}"
   loop: "{{ categories_list }}"
-  when: (categories_list is defined) and (dell_dsu_update_all_firmware == False) 
+  when: (categories_list is defined) and (not dell_dsu_update_all_firmware) 
 
 - name: Set dsu_categories
   set_fact:
@@ -100,7 +107,7 @@
 - name: Set dell_dsu_arguments when dsu_categories are not defined
   set_fact:
     dell_dsu_arguments: " {{ dell_dsu_arguments_base }}"
-  when: (dell_dsu_update_all_firmware is defined) and (dell_dsu_update_all_firmware == True) 
+  when: (dell_dsu_update_all_firmware is defined) and (dell_dsu_update_all_firmware) 
 
 - name: Set dell_dsu_arguments when dsu_categories are defined
   set_fact:

@@ -6,7 +6,7 @@
      - dell_dsu_repo_install: True
      - dell_dsu_update_all_firmware: False
      - dell_dsu_arguments_base: "--non-interactive --apply-upgrades --preview"
-     - upgrade_categories: "iDRAC,BIOS"
+     - upgrade_categories: "iDRAC"
      - dell_dsu_assert: False
 
    roles:
