@@ -63,11 +63,6 @@
     name: dell-system-update
     state: latest
 
-- name: Init dell_dsu_update_all_firmware
-  set_fact:
-    dell_dsu_update_all_firmware: False
-    dell_dsu_update: False
-
 - name: Set upgrade_categories when dell_dsu_update_all_firmware is True
   set_fact:
     upgrade_categories: all
@@ -83,7 +78,6 @@
 - name: Set dell_dsu_update_all_firmware to True
   set_fact:
     dell_dsu_update_all_firmware: True
-    dell_dsu_update: True
   when: (categories_list is defined) and ("all" in categories_list) and (categories_list | length == 1)
 
 - name: Check if the arguments are well defined
@@ -92,32 +86,14 @@
   loop: "{{ categories_list }}"
   when: (categories_list is defined) and (not dell_dsu_update_all_firmware)
 
-- name: Set dsu_categories list
+- name: Set dell_dsu_arguments
   set_fact:
-    dsu_categories_list: "{{ (dsu_categories_list | default([])) + [firmware_components[item]] }}"
-  loop: "{{ categories_list }}"
-  when: (categories_list is defined) and (not dell_dsu_update_all_firmware) 
-
-- name: Set dsu_categories
-  set_fact:
-    dsu_categories: "{{ dsu_categories_list | join(',') }}"
-  loop: "{{ categories_list }}"
-  when: (dsu_categories_list is defined)
-
-- name: Set dell_dsu_arguments when dsu_categories are not defined
-  set_fact:
-    dell_dsu_arguments: " {{ dell_dsu_arguments_base }}"
-  when: (dell_dsu_update_all_firmware is defined) and (dell_dsu_update_all_firmware) 
-
-- name: Set dell_dsu_arguments when dsu_categories are defined
-  set_fact:
-    dell_dsu_arguments: " {{ dell_dsu_arguments_base}} --category={{ dsu_categories }}"
-    dell_dsu_update: True
-  when: (dsu_categories is defined) 
+    dell_dsu_arguments: "{{ dell_dsu_arguments_base }}{% if not dell_dsu_update_all_firmware %} --category={% set comma = joiner(',') %}{% for dsu_category in categories_list %}{{ comma() }}{{ firmware_components[dsu_category] }}{% endfor %}{% endif %}"
+  when: (categories_list is defined) 
 
 - name: Update firmware
   command: "dsu {{ dell_dsu_arguments }}"
-  when: dell_dsu_update
+  when: dell_dsu_arguments
   register: command_result
   failed_when: command_result.rc not in dell_dsu_changed_exit_codes + dell_dsu_not_changed_exit_codes
   changed_when: command_result.rc in dell_dsu_changed_exit_codes
