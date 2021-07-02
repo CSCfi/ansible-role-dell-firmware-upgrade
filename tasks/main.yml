@@ -63,9 +63,26 @@
     name: dell-system-update
     state: latest
 
+- name: Set categories_list
+  set_fact:
+    categories_list: "{{ upgrade_categories.split(',') }}"
+  when: (upgrade_categories is defined)
+
+- name: Check if the arguments are well defined
+  assert:
+    that: firmware_components[item] is defined
+  loop: "{{ categories_list }}"
+  when: categories_list is defined
+
+- name: Set dell_dsu_arguments
+  set_fact:
+    dell_dsu_arguments: "{{ dell_dsu_arguments_base }}{% if not dell_dsu_update_all_firmware %} --category={% set comma = joiner(',') %}{% for dsu_category in categories_list %}{{ comma() }}{{ firmware_components[dsu_category] }}{% endfor %}{% endif %}"
+  when: (categories_list is defined) or (dell_dsu_update_all_firmware)
+
 - name: Update firmware
   command: "dsu {{ dell_dsu_arguments }}"
-  when: dell_dsu_update_all_firmware
+  when: dell_dsu_arguments is defined
   register: command_result
   failed_when: command_result.rc not in dell_dsu_changed_exit_codes + dell_dsu_not_changed_exit_codes
   changed_when: command_result.rc in dell_dsu_changed_exit_codes
+...

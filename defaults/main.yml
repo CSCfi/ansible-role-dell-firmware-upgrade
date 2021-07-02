@@ -18,10 +18,8 @@ dell_dsu_gpg_keys:
   - 0xca77951d23b66a9d.asc # gpg-pubkey-23b66a9d-40912de4
   - 0x3CA66B4946770C59.asc # gpg-pubkey-46770c59-5ec55690
 
-# Arguments to DSU
-# Could be changed to for eaxmple only upgrade some categories with "--category=BI" 
-#  for BIOS updates only
-dell_dsu_arguments: "--non-interactive --apply-upgrades"
+# Basic DSU arguments
+dell_dsu_arguments_base: "--non-interactive --apply-upgrades"
 dell_dsu_prerequisites:
   - usbutils
   - compat-libstdc++-33.i686
@@ -32,4 +30,24 @@ dell_dsu_changed_exit_codes:
   - 8 # Reboot is required for the update to be completed successfully
 dell_dsu_not_changed_exit_codes:
   - 34 # There were no updates found for the system.
+
+firmware_components:
+  SAS_Drive: AS
+  BIOS: BI
+  Chassis_System_Management: CE
+  Drivers_OS_Deployment: DD
+  Diagnostics: DI
+  iDRAC: DR
+  ESM: ES
+  Fibre_Channel: FC
+  Firmware: FW
+  Memory: MM
+  Network: NI
+  Serial_ATA: SA
+  SAS_Non_RAID: SE
+  SAS_RAID: SF
+  Systems_Management: SM 
+  Storage: ST
+  Tape_Drives: TH 
+  Express_Flash_PCIe_SSD: XP
 ...
