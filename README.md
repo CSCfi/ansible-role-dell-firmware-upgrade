@@ -12,7 +12,7 @@ See defaults/main.yml for details.
 
 By default this role does not install the Dell DSU yum repo. To install Dell DSU, the variable dell_dsu_repo_install should be set to True.
 
-By default, this role upgrades all firmwares. To disable this functionality, the variable dell_dsu_update_all_firmware should be set to True.
+By default, this role upgrades all firmwares. To disable this functionality, the variable dell_dsu_update_all_firmware should be set to False.
 
 If some firmwares are defined in upgrade_categories, then only these firmwares should be upgrated. If upgrade_categories is defined, then dell_dsu_update_all_firmware is ignored.
 
