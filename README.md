@@ -57,6 +57,8 @@ Example Playbook
      - { role: ansible-role-dell-firmware-upgrade }
 ```
 
+More information about possible firmware components is available [here](defaults/main.yml#L34-L52).
+
 License
 -------
 
