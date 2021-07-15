@@ -14,7 +14,7 @@ By default this role does not install the Dell DSU yum repo. To install Dell DSU
 
 By default, this role upgrades all firmwares. To disable this functionality, the variable dell_dsu_update_all_firmware should be set to False.
 
-If some firmwares are defined in upgrade_categories, then only these firmwares should be upgrated. If upgrade_categories is defined, then dell_dsu_update_all_firmware is ignored.
+If some firmwares are defined in upgrade_categories, then only these firmwares should be upgraded. If upgrade_categories is defined, then dell_dsu_update_all_firmware is ignored.
 
 Define something like this to use a proxy when fetching the Dell bootstrap script
 <pre>
@@ -32,7 +32,7 @@ Dependencies
 Example Playbook
 ----------------
 
-* You can simply use this role like. In this case, the code will upgrade all firmwares.
+* You can simply use this role like below. In this case, the code will upgrade all firmwares.
 ```
 - hosts: servers
   roles:
