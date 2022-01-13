@@ -20,10 +20,6 @@ dell_dsu_gpg_keys:
 
 # Basic DSU arguments
 dell_dsu_arguments_base: "--non-interactive --apply-upgrades"
-dell_dsu_prerequisites:
-  - usbutils
-  - compat-libstdc++-33.i686
-  - OpenIPMI
 # Exit codes documented on https://linux.dell.com/repo/hardware/dsu/
 dell_dsu_changed_exit_codes:
   - 0 # Any successful operation performed by DSU

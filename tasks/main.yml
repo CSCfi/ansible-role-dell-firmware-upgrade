@@ -25,11 +25,6 @@
     var: reg_install_dsu_repo
     verbosity: 1
 
-- name: Install Dell DSU prerequisites
-  yum:
-    name: "{{ dell_dsu_prerequisites }}"
-    state: present
-
 - name: create /usr/libexec/dell_dup
   file:
     path: /usr/libexec/dell_dup
