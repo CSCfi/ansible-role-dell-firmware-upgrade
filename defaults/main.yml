@@ -17,6 +17,7 @@ dell_dsu_gpg_keys:
   - 0x1285491434D8786F.asc # gpg-pubkey-34d8786f-4f512d86
   - 0xca77951d23b66a9d.asc # gpg-pubkey-23b66a9d-40912de4
   - 0x3CA66B4946770C59.asc # gpg-pubkey-46770c59-5ec55690
+  - 0x274E9C32857A9594.asc # gpg-pubkey-857a9594-5ebb8b38
 
 # Basic DSU arguments
 dell_dsu_arguments_base: "--non-interactive --apply-upgrades"
