@@ -10,7 +10,9 @@ dell_dsu_update_all_firmware: True
 dell_dsu_assert: True
 # Manage multipath.conf (will do so only if file exists and multipathd is active)
 dell_dsu_manage_multipath_config: True
-# rollout dell gpg keys
+
+# rollout dell gpg keys - option 1
+# the gpg keys are provided by the ansible role itself
 dell_dsu_rollout_gpg_keys: True
 dell_dsu_gpg_keys:
   - 0x756ba70b1019ced6.asc # gpg-pubkey-1019ced6-4e9cac25
@@ -18,6 +20,11 @@ dell_dsu_gpg_keys:
   - 0xca77951d23b66a9d.asc # gpg-pubkey-23b66a9d-40912de4
   - 0x3CA66B4946770C59.asc # gpg-pubkey-46770c59-5ec55690
   - 0x274E9C32857A9594.asc # gpg-pubkey-857a9594-5ebb8b38
+
+# rollout dell gpg keys - option 2
+# the gpg keys are fetched by the dell repo installation script
+# note that repo installation script is run only if dell_dsu_repo_install is set to True
+dell_dsu_rollout_gpg_keys_from_dell_script: False
 
 # Basic DSU arguments
 dell_dsu_arguments_base: "--non-interactive --apply-upgrades"
