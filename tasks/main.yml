@@ -11,7 +11,7 @@
   when: dell_dsu_manage_multipath_config
 
 - name: Install Dell DSU repo
-  environment: "{{ proxy_env|default({}) }}"
+  environment: "{{ proxy_env | combine( { 'IMPORT_GPG_CONFIRMATION': 'yes' } | default({}) }}"
   shell: "curl -O https://linux.dell.com/repo/hardware/dsu/bootstrap.cgi && yes {{ 'y' if dell_dsu_rollout_gpg_keys_from_dell_script else 'n' }} | bash bootstrap.cgi"
   args:
      creates: /etc/yum.repos.d/dell-system-update.repo
