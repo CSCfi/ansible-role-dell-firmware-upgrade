@@ -32,27 +32,6 @@
     mode: '0755'
   when: dell_dsu_rollout_gpg_keys
 
-# - name: copy gpg keys
-#   copy:
-#     dest: /usr/libexec/dell_dup/{{ item }}
-#     src: "{{ item }}"
-#   loop: "{{ dell_dsu_gpg_keys }}"
-#   when: dell_dsu_rollout_gpg_keys
-
-# - name: rpm import gpg keys
-#   rpm_key:
-#     key: /usr/libexec/dell_dup/{{ item }}
-#   loop: "{{ dell_dsu_gpg_keys }}"
-#   when: dell_dsu_rollout_gpg_keys and not ansible_check_mode
-
-# - name: gpg import gpg keys
-#   command: "gpg --import /usr/libexec/dell_dup/{{ item }}"
-#   register: reg_dell_dsu_gpg_import
-#   loop: "{{ dell_dsu_gpg_keys }}"
-#   changed_when: reg_dell_dsu_gpg_import.stderr is search('imported')
-#   failed_when: reg_dell_dsu_gpg_import.rc|int != 0
-#   when: dell_dsu_rollout_gpg_keys
-
 - name: Installing Dell DSU RPM
   yum:
     name: dell-system-update
