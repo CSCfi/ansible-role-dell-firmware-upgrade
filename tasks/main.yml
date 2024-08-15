@@ -10,13 +10,25 @@
   include_tasks: multipathd.yml
   when: dell_dsu_manage_multipath_config
 
-- name: Install Dell DSU repo
+- name: Fetch Dell bootstrap script
   environment: "{{ proxy_env | default({}) }}"
-  shell: "curl -s https://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | sed 's/^IMPORT_GPG_CONFIRMATION=\"na\"$/IMPORT_GPG_CONFIRMATION=\"yes\"/' | bash -s"
-  args:
-     creates: /etc/yum.repos.d/dell-system-update.repo
+  get_url:
+    url: https://linux.dell.com/repo/hardware/dsu/bootstrap.cgi
+    dest: /tmp/dell_bootstrap
+    mode: 0755
+
+- name: Change import GPG variable in script
+  lineinfile:
+    path: /tmp/dell_bootstrap
+    regexp: '^IMPORT_GPG_CONFIRMATION="na"$'
+    line: 'IMPORT_GPG_CONFIRMATION="yes"'
+    backup: true
+
+- name: Install Dell DSU repo
+  command:
+    cmd: /tmp/dell_bootstrap
+    creates: /etc/yum.repos.d/dell-system-update.repo
   tags: skip_ansible_lint
-  become: true
   register: reg_install_dsu_repo
   when: dell_dsu_repo_install
   failed_when: "('Done!' not in reg_install_dsu_repo.stdout) and (reg_install_dsu_repo.rc != 0)"
