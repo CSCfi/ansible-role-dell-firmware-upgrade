@@ -25,11 +25,10 @@
     backup: true
 
 - name: Remove unsupported GPG key for AlmaLinux 9
-  lineinfile:
+  replace:
     path: /tmp/dell_bootstrap
     regexp: '^(.*)857A9594(.*)$'
-    line: '# \g<1>857A9594\g<2>'
-    backrefs: true
+    replace: '# \g<1>857A9594\g<2>'
     backup: true
   when:
     - ansible_facts['distribution'] == 'AlmaLinux'
