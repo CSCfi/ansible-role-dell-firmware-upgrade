@@ -24,6 +24,16 @@
     line: 'IMPORT_GPG_CONFIRMATION="yes"'
     backup: true
 
+- name: Remove unsupported GPG key for AlmaLinux 9
+  lineinfile:
+    path: /tmp/dell_bootstrap
+    regexp: '^(.*)857A9594(.*)$'
+    line: '# \1857A9594\2'
+    backup: true
+  when:
+    - ansible_facts['distribution'] == 'AlmaLinux'
+    - ansible_facts['distribution_major_version'] == '9'
+
 - name: Install Dell DSU repo
   environment: "{{ proxy_env | default({}) }}"
   command:
