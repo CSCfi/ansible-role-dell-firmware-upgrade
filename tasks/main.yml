@@ -25,10 +25,10 @@
     backup: true
 
 - name: Install Dell DSU repo
+  environment: "{{ proxy_env | default({}) }}"
   command:
     cmd: /tmp/dell_bootstrap
     creates: /etc/yum.repos.d/dell-system-update.repo
-  become: true
   register: reg_install_dsu_repo
   when: dell_dsu_repo_install
   failed_when: "('Done!' not in reg_install_dsu_repo.stdout) and (reg_install_dsu_repo.rc != 0)"
