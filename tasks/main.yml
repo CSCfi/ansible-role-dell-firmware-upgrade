@@ -28,7 +28,7 @@
   command:
     cmd: /tmp/dell_bootstrap
     creates: /etc/yum.repos.d/dell-system-update.repo
-  tags: skip_ansible_lint
+  become: true
   register: reg_install_dsu_repo
   when: dell_dsu_repo_install
   failed_when: "('Done!' not in reg_install_dsu_repo.stdout) and (reg_install_dsu_repo.rc != 0)"
