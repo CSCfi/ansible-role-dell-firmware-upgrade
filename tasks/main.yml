@@ -27,8 +27,8 @@
 - name: Remove unsupported GPG key for AlmaLinux 9
   lineinfile:
     path: /tmp/dell_bootstrap
-    regexp: '^(.*)857A9594(.*)$'
-    line: '# \1857A9594\2'
+    regexp: '^(before=)857A9594(after=)$'
+    line: '# {{ before }}857A9594{{ after }}'
     backrefs: true
     backup: true
   when:
