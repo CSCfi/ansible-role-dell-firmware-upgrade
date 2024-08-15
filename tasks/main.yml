@@ -29,6 +29,7 @@
     path: /tmp/dell_bootstrap
     regexp: '^(.*)857A9594(.*)$'
     line: '# \1857A9594\2'
+    backrefs: true
     backup: true
   when:
     - ansible_facts['distribution'] == 'AlmaLinux'
