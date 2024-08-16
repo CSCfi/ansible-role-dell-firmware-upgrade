@@ -10,12 +10,35 @@
   include_tasks: multipathd.yml
   when: dell_dsu_manage_multipath_config
 
+- name: Fetch Dell bootstrap script
+  environment: "{{ proxy_env | default({}) }}"
+  get_url:
+    url: https://linux.dell.com/repo/hardware/dsu/bootstrap.cgi
+    dest: /tmp/dell_bootstrap
+    mode: 0755
+
+- name: Change import GPG variable in script
+  lineinfile:
+    path: /tmp/dell_bootstrap
+    regexp: '^IMPORT_GPG_CONFIRMATION="na"$'
+    line: 'IMPORT_GPG_CONFIRMATION="yes"'
+    backup: true
+
+- name: Remove unsupported GPG key for AlmaLinux 9
+  replace:
+    path: /tmp/dell_bootstrap
+    regexp: '^(.*)857A9594(.*)$'
+    replace: '# \g<1>857A9594\g<2>'
+    backup: true
+  when:
+    - ansible_facts['distribution'] == 'AlmaLinux'
+    - ansible_facts['distribution_major_version'] == '9'
+
 - name: Install Dell DSU repo
   environment: "{{ proxy_env | default({}) }}"
-  shell: "curl -s https://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | sed 's/^IMPORT_GPG_CONFIRMATION=\"na\"$/IMPORT_GPG_CONFIRMATION=\"yes\"/' | bash -s"
-  args:
-     creates: /etc/yum.repos.d/dell-system-update.repo
-  tags: skip_ansible_lint
+  command:
+    cmd: /tmp/dell_bootstrap
+    creates: /etc/yum.repos.d/dell-system-update.repo
   register: reg_install_dsu_repo
   when: dell_dsu_repo_install
   failed_when: "('Done!' not in reg_install_dsu_repo.stdout) and (reg_install_dsu_repo.rc != 0)"
