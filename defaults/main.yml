@@ -20,6 +20,7 @@ dell_dsu_gpg_keys:
   - 0xca77951d23b66a9d.asc # gpg-pubkey-23b66a9d-40912de4
   - 0x3CA66B4946770C59.asc # gpg-pubkey-46770c59-5ec55690
   - 0x274E9C32857A9594.asc # gpg-pubkey-857a9594-5ebb8b38
+  - 0x076B95DB2FFC7F4A.asc #
 
 # rollout dell gpg keys - option 2
 # the gpg keys are fetched by the dell repo installation script
@@ -34,6 +35,11 @@ dell_dsu_changed_exit_codes:
   - 8 # Reboot is required for the update to be completed successfully
 dell_dsu_not_changed_exit_codes:
   - 34 # There were no updates found for the system.
+
+dell_dsu_no_proxy:
+  no_proxy: "169.254.1.1"
+
+dell_dsu_create_root_alias: True
 
 firmware_components:
   SAS_Drive: AS
