@@ -63,8 +63,8 @@
   lineinfile:
     path: /root/.bashrc
     regexp: "alias dsu"
-    line: alias dsu="https_proxy={{ proxy_env['https_proxy'] }} no_proxy={{ dell_dsu_no_proxy['no_proxy']}} dsu"
-  when: dell_dsu_create_root_alias and (proxy_env is defined)
+    line: alias dsu="dsu --source-type=OSNATIVE"
+  when: dell_dsu_create_root_alias
 
 - name: Set categories_list
   set_fact:
@@ -83,7 +83,6 @@
   when: (categories_list is defined) or (dell_dsu_update_all_firmware)
 
 - name: Update firmware
-  environment: "{{ proxy_env | default({}) | combine(dell_dsu_no_proxy) }}"
   command: "dsu {{ dell_dsu_arguments }}"
   when: dell_dsu_arguments is defined
   register: command_result

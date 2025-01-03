@@ -28,16 +28,13 @@ dell_dsu_gpg_keys:
 dell_dsu_rollout_gpg_keys_from_dell_script: False
 
 # Basic DSU arguments
-dell_dsu_arguments_base: "--non-interactive --apply-upgrades"
+dell_dsu_arguments_base: "--source-type=OSNATIVE --non-interactive --apply-upgrades"
 # Exit codes documented on https://linux.dell.com/repo/hardware/dsu/
 dell_dsu_changed_exit_codes:
   - 0 # Any successful operation performed by DSU
   - 8 # Reboot is required for the update to be completed successfully
 dell_dsu_not_changed_exit_codes:
   - 34 # There were no updates found for the system.
-
-dell_dsu_no_proxy:
-  no_proxy: "169.254.1.1"
 
 dell_dsu_create_root_alias: True
 
