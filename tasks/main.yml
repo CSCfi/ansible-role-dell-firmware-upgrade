@@ -38,7 +38,6 @@
   environment: "{{ proxy_env | default({}) }}"
   command:
     cmd: /tmp/dell_bootstrap
-    creates: /etc/yum.repos.d/dell-system-update.repo
   register: reg_install_dsu_repo
   when: dell_dsu_repo_install
   failed_when: "('Done!' not in reg_install_dsu_repo.stdout) and (reg_install_dsu_repo.rc != 0)"
@@ -59,6 +58,13 @@
   yum:
     name: dell-system-update
     state: latest
+
+- name: Set root alias for proxy
+  lineinfile:
+    path: /root/.bashrc
+    regexp: "alias dsu"
+    line: alias dsu="dsu --source-type=OSNATIVE"
+  when: dell_dsu_create_root_alias
 
 - name: Set categories_list
   set_fact:
